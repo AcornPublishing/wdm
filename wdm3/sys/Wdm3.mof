@@ -1,0 +1,73 @@
+/*
+	Copyright © 1998,1999 Chris Cant, PHD Computer Consultants Ltd
+	WDM Book for R&D Books, Miller Freeman Inc
+
+	Wdm2 Example:	WMI custom blocks
+
+		Wdm3Information	(WDM3_WMI_GUID)
+		Wdm3Event (WDM3_WMI_EVENT_GUID)
+*/
+
+/*	WMI data block: Information about Wdm3 device
+	Wdm3Information, identified by WDM3_WMI_GUID
+*/
+
+[WMI, Dynamic, Provider("WMIProv"),
+ Description("Wdm3 information"),
+ guid("{C0CF0643-5F6E-11d2-B677-00C0DFE4C1F3}"),
+ locale("MS\\0x409")]
+
+class Wdm3Information
+{
+	[key, read]
+		string InstanceName;
+	[read]
+		boolean Active;
+
+	[WmiDataId(1),
+		read,
+		Description("Shared memory buffer length")
+	]
+		uint32 BufferLen;
+
+	[WmiDataId(2),
+		read,
+		Description("First ULONG of shared memory buffer")
+	]
+		uint32 BufferFirstWord;
+
+	[WmiDataId(3),
+		read,
+		Description("Symbolic link name")
+	]
+		string SymbolicLinkName;
+
+/*	[implemented]
+	void PowerDown();
+*/
+};
+
+/*	WMI event block: Wdm3 device event
+	Wdm3Event, identified by WDM3_WMI_EVENT_GUID
+*/
+
+[WMI, Dynamic, Provider("WMIProv"),
+ guid("{C0CF0644-5F6E-11d2-B677-00C0DFE4C1F3}"),
+ locale("MS\\0x409"),
+ Description("Wdm3 event message")]
+
+class Wdm3Event : WMIEvent
+{
+	[key, read]
+		string InstanceName;
+
+	[read]
+		boolean Active;
+
+	[WmiDataId(1),
+		read,
+		Description("Message")
+	]
+		string Message;
+};
+

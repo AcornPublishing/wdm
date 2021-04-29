@@ -1,0 +1,75 @@
+; Wdm1free.Inf - install information file
+; Copyright © 1998,1999 Chris Cant, PHD Computer Consultants Ltd
+
+[Version]
+Signature="$Chicago$"
+Class=Unknown
+Provider=%WDMBook%
+DriverVer=05/19/1999,1.0.6.0
+
+[Manufacturer]
+%WDMBook% = WDM.Book
+
+[WDM.Book]
+%Wdm1%=Wdm1.Install, *wdmBook\Wdm1
+
+[DestinationDirs]
+Wdm1.Files.Driver=10,System32\Drivers
+Wdm1.Files.Driver.NTx86=10,System32\Drivers
+
+[SourceDisksNames]
+1="Wdm1 build directory",,,
+
+[SourceDisksFiles]
+Wdm1.sys=1,obj\i386\free
+
+[SourceDisksFiles.x86]
+Wdm1.sys=1,objfre\i386
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 98
+
+[Wdm1.Install]
+CopyFiles=Wdm1.Files.Driver
+AddReg=Wdm1.AddReg
+
+[Wdm1.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,Wdm1.sys
+
+[Wdm1.Files.Driver]
+Wdm1.sys
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 2000
+
+[Wdm1.Install.NTx86]
+CopyFiles=Wdm1.Files.Driver.NTx86
+
+[Wdm1.Files.Driver.NTx86]
+Wdm1.sys,,,%COPYFLG_NOSKIP%
+
+[Wdm1.Install.NTx86.Services]
+AddService = Wdm1, %SPSVCINST_ASSOCSERVICE%, Wdm1.Service
+
+[Wdm1.Service]
+DisplayName    = %Wdm1.ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %10%\System32\Drivers\Wdm1.sys
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Strings
+
+[Strings]
+WDMBook="WDM Book"
+Wdm1="WDM Book: Wdm1 Example, free build"
+Wdm1.ServiceName="WDM Book Wdm1 Driver"
+
+SPSVCINST_ASSOCSERVICE=0x00000002	; Driver service is associated with device being installed
+COPYFLG_NOSKIP=2	; Do not allow user to skip file
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1

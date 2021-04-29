@@ -1,0 +1,13 @@
+TARGETNAME=PHDIo
+TARGETTYPE=DRIVER
+TARGETPATH=OBJ
+
+INCLUDES=$(BASEDIR)\inc;
+
+SOURCES=	Init.cpp \
+			Dispatch.cpp \
+			DeviceIo.cpp \
+			DebugPrint.c \
+			PHDIo.rc
+
+NTTARGETFILES=PostBuildSteps

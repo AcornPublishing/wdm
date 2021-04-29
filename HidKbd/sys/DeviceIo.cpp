@@ -1,0 +1,44 @@
+//////////////////////////////////////////////////////////////////////////////
+//	Copyright © 1999 Chris Cant, PHD Computer Consultants Ltd
+//	WDM Book for R&D Books, Miller Freeman Inc
+//
+//	HidKbd example
+/////////////////////////////////////////////////////////////////////////////
+//	DeviceIo.cpp:	Routines that interact with a device
+//					Real I/O has been commented out
+/////////////////////////////////////////////////////////////////////////////
+//	StartDevice			Start the device
+//*	RetrieveResources	Get resources from given list
+//	StopDevice			Stop device
+//	SetPowerState		Set power state
+//*	DisableDeviceInterrupts		Disable device interrupts
+//*	EnableDeviceInterrupts		Enable device interrupts
+//*	InterruptHandler	Handle interrupts
+/////////////////////////////////////////////////////////////////////////////
+//	Version history
+//	27-Apr-99	1.0.0	CC	creation
+/////////////////////////////////////////////////////////////////////////////
+
+#include "HidKbd.h"
+
+#pragma code_seg("PAGE")	// start PAGE section
+
+/////////////////////////////////////////////////////////////////////////////
+//	StartDevice:	Start the device
+
+NTSTATUS StartDevice( IN PHIDKBD_DEVICE_EXTENSION dx, IN PCM_RESOURCE_LIST AllocatedResourcesTranslated)
+{
+	return STATUS_SUCCESS;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//	StopDevice:	Stop device
+
+VOID StopDevice( IN PHIDKBD_DEVICE_EXTENSION dx)
+{
+	DebugPrintMsg("StopDevice");
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+#pragma code_seg()	// end PAGE section

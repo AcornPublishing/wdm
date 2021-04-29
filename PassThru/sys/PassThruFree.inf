@@ -1,0 +1,75 @@
+; PassThrufree.Inf - install information file
+; Copyright © 1998 Chris Cant, PHD Computer Consultants Ltd
+
+[Version]
+Signature="$Chicago$"
+Class=Unknown
+Provider=%WDMBook%
+DriverVer=05/19/1999,1.0.0.0
+
+[Manufacturer]
+%WDMBook% = WDM.Book
+
+[WDM.Book]
+%PassThru%=PassThru.Install, *wdmBook\PassThru
+
+[DestinationDirs]
+PassThru.Files.Driver=10,System32\Drivers
+PassThru.Files.Driver.NTx86=10,System32\Drivers
+
+[SourceDisksNames]
+1="PassThru build directory",,,
+
+[SourceDisksFiles]
+PassThru.sys=1,obj\i386\free
+
+[SourceDisksFiles.x86]
+PassThru.sys=1,objfre\i386
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 98
+
+[PassThru.Install]
+CopyFiles=PassThru.Files.Driver
+AddReg=PassThru.AddReg
+
+[PassThru.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,PassThru.sys
+
+[PassThru.Files.Driver]
+PassThru.sys
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 2000
+
+[PassThru.Install.NTx86]
+CopyFiles=PassThru.Files.Driver.NTx86
+
+[PassThru.Files.Driver.NTx86]
+PassThru.sys,,,%COPYFLG_NOSKIP%
+
+[PassThru.Install.NTx86.Services]
+AddService = PassThru, %SPSVCINST_ASSOCSERVICE%, PassThru.Service
+
+[PassThru.Service]
+DisplayName    = %PassThru.ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %10%\System32\Drivers\PassThru.sys
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Strings
+
+[Strings]
+WDMBook="WDM Book"
+PassThru="WDM Book: PassThru Example, free build"
+PassThru.ServiceName="WDM Book PassThru Driver"
+
+SPSVCINST_ASSOCSERVICE=0x00000002	; Driver service is associated with device being installed
+COPYFLG_NOSKIP=2	; Do not allow user to skip file
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1

@@ -1,0 +1,92 @@
+; WdmIoLpt1Free.Inf - install information file for LPT1 at 278-27f, IRQ 7
+; Copyright © 1999 Chris Cant, PHD Computer Consultants Ltd
+
+[Version]
+Signature="$Chicago$"
+Class=Unknown
+Provider=%WDMBook%
+DriverVer=05/19/1999,1.0.0.0
+
+[Manufacturer]
+%WDMBook% = WDM.Book
+
+[WDM.Book]
+%WdmIoLpt1%=WdmIo.Install, *wdmBook\WdmIo
+
+[DestinationDirs]
+WdmIo.Files.Driver=10,System32\Drivers
+WdmIo.Files.Driver.NTx86=10,System32\Drivers
+
+[SourceDisksNames]
+1="WdmIo build directory",,,
+
+[SourceDisksFiles]
+WdmIo.sys=1,obj\i386\free
+
+[SourceDisksFiles.x86]
+WdmIo.sys=1,objfre\i386
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 98
+
+[WdmIo.Install]
+CopyFiles=WdmIo.Files.Driver
+AddReg=WdmIo.AddReg
+LogConfig=WdmIo.LogConfig1,WdmIo.LogConfig2,WdmIo.LogConfig3
+
+[WdmIo.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,WdmIo.sys
+
+[WdmIo.Files.Driver]
+WdmIo.sys
+
+[WdmIo.LogConfig1]
+ConfigPriority=DESIRED
+IOConfig=378-37a
+IRQConfig=7,5
+
+[WdmIo.LogConfig2]
+ConfigPriority=NORMAL
+IOConfig=278-27a
+IRQConfig=7,5
+
+[WdmIo.LogConfig3]
+ConfigPriority=NORMAL
+IOConfig=3bc-3be
+IRQConfig=7,5
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 2000
+
+[WdmIo.Install.NTx86]
+CopyFiles=WdmIo.Files.Driver.NTx86
+LogConfig=WdmIo.LogConfig1,WdmIo.LogConfig2,WdmIo.LogConfig3
+
+[WdmIo.Files.Driver.NTx86]
+WdmIo.sys,,,%COPYFLG_NOSKIP%
+
+[WdmIo.Install.NTx86.Services]
+AddService = WdmIo, %SPSVCINST_ASSOCSERVICE%, WdmIo.Service
+
+[WdmIo.Service]
+DisplayName    = %WdmIo.ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %10%\System32\Drivers\WdmIo.sys
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Strings
+
+[Strings]
+WDMBook="WDM Book"
+WdmIoLpt1="WDM Book: WdmIo Example, Lpt1, free build"
+WdmIo.ServiceName="WDM Book WdmIo Driver"
+
+SPSVCINST_ASSOCSERVICE=0x00000002	; Driver service is associated with device being installed
+COPYFLG_NOSKIP=2	; Do not allow user to skip file
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1

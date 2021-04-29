@@ -1,0 +1,20 @@
+TARGETNAME=Wdm3
+TARGETTYPE=DRIVER
+DRIVERTYPE=WDM
+TARGETPATH=OBJ
+TARGETLIBS=C:\NTDDK\LIBFRE\I386\WmiLib.Lib
+
+INCLUDES=$(BASEDIR)\inc;
+
+SOURCES=	Init.cpp \
+			Dispatch.cpp \
+			Pnp.cpp \
+			Power.cpp \
+			DeviceIo.cpp \
+			EventLog.cpp \
+			Wmi.cpp \
+			DebugPrint.c \
+			Wdm3.rc
+
+NTTARGETFILE0=prebuild
+NTTARGETFILES=PostBuildSteps

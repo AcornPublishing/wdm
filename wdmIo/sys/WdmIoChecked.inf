@@ -1,0 +1,82 @@
+; WdmIoChecked.Inf - install information file
+; Copyright © 1999 Chris Cant, PHD Computer Consultants Ltd
+
+[Version]
+Signature="$Chicago$"
+Class=Unknown
+Provider=%WDMBook%
+DriverVer=05/19/1999,1.0.0.0
+
+[Manufacturer]
+%WDMBook% = WDM.Book
+
+[WDM.Book]
+%WdmIo%=WdmIo.Install, *wdmBook\WdmIo
+
+[DestinationDirs]
+WdmIo.Files.Driver=10,System32\Drivers
+WdmIo.Files.Driver.NTx86=10,System32\Drivers
+
+[SourceDisksNames]
+1="WdmIo build directory",,,
+
+[SourceDisksFiles]
+WdmIo.sys=1,obj\i386\checked
+
+[SourceDisksFiles.x86]
+WdmIo.sys=1,objchk\i386
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 98
+
+[WdmIo.Install]
+CopyFiles=WdmIo.Files.Driver
+AddReg=WdmIo.AddReg
+LogConfig=WdmIo.LogConfig
+
+[WdmIo.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,WdmIo.sys
+
+[WdmIo.Files.Driver]
+WdmIo.sys
+
+[WdmIo.LogConfig]
+IOConfig=380-382
+;IRQConfig=3
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows 2000
+
+[WdmIo.Install.NTx86]
+CopyFiles=WdmIo.Files.Driver.NTx86
+LogConfig=WdmIo.LogConfig
+
+[WdmIo.Files.Driver.NTx86]
+WdmIo.sys,,,%COPYFLG_NOSKIP%
+
+[WdmIo.Install.NTx86.Services]
+AddService = WdmIo, %SPSVCINST_ASSOCSERVICE%, WdmIo.Service
+
+[WdmIo.Service]
+DisplayName    = %WdmIo.ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %10%\System32\Drivers\WdmIo.sys
+;Dependencies   = +DebugPrint
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Strings
+
+[Strings]
+WDMBook="WDM Book"
+WdmIo="WDM Book: WdmIo Example, checked build"
+WdmIo.ServiceName="WDM Book WdmIo Driver"
+
+SPSVCINST_ASSOCSERVICE=0x00000002	; Driver service is associated with device being installed
+COPYFLG_NOSKIP=2	; Do not allow user to skip file
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1

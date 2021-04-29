@@ -1,0 +1,13 @@
+TARGETNAME=PassThru
+TARGETTYPE=DRIVER
+DRIVERTYPE=WDM
+TARGETPATH=OBJ
+
+INCLUDES=$(BASEDIR)\inc;
+
+SOURCES=	init.cpp \
+			pnp.cpp \
+			DebugPrint.c \
+			PassThru.rc
+
+NTTARGETFILES=PostBuildSteps

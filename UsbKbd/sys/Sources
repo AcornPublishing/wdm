@@ -1,0 +1,17 @@
+TARGETNAME=UsbKbd
+TARGETTYPE=DRIVER
+DRIVERTYPE=WDM
+TARGETPATH=OBJ
+TARGETLIBS=C:\98DDK\LIB\I386\FREE\Usbd.Lib
+
+INCLUDES=$(BASEDIR)\inc;
+
+SOURCES=	Init.cpp \
+			Dispatch.cpp \
+			Pnp.cpp \
+			DeviceIo.cpp \
+			Usb.cpp \
+			DebugPrint.c \
+			UsbKbd.rc
+
+NTTARGETFILES=PostBuildSteps

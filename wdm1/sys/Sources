@@ -1,0 +1,14 @@
+TARGETNAME=Wdm1
+TARGETTYPE=DRIVER
+DRIVERTYPE=WDM
+TARGETPATH=OBJ
+
+INCLUDES=$(BASEDIR)\inc;
+
+SOURCES=	init.cpp \
+			dispatch.cpp \
+			pnp.cpp \
+			DebugPrint.c \
+			Wdm1.rc
+
+NTTARGETFILES=PostBuildSteps

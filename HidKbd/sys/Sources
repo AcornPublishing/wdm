@@ -1,0 +1,15 @@
+TARGETNAME=HidKbd
+TARGETTYPE=DRIVER
+TARGETPATH=OBJ
+TARGETLIBS=c:\98ddk\lib\i386\free\hidparse.lib
+
+INCLUDES=$(BASEDIR)\inc;
+
+SOURCES=	Init.cpp \
+			Dispatch.cpp \
+			DeviceIo.cpp \
+			Notify.cpp \
+			DebugPrint.c \
+			HidKbd.rc
+
+NTTARGETFILES=PostBuildSteps
